@@ -13,7 +13,37 @@
         android:layout_height="wrap_content"
         android:background="#BFB0B0"
         android:minHeight="?attr/actionBarSize"
-        app:collapseIcon="@android:drawable/alert_light_frame"></androidx.appcompat.widget.Toolbar>
+        app:collapseIcon="@android:drawable/alert_light_frame">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/contactsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:paddingRight="10dp"
+                android:paddingTop="0dp"
+                android:text="Nenhum contato"
+                android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/messagesTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:paddingRight="10dp"
+                android:paddingBottom="0dp"
+                android:text="Nenhum mensagem"
+                android:textSize="18dp" />
+        </LinearLayout>
+
+
+    </androidx.appcompat.widget.Toolbar>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -59,6 +89,5 @@
         </LinearLayout>
 
     </RelativeLayout>
-
 
 </RelativeLayout>

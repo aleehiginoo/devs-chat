@@ -8,9 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 
 import org.json.JSONArray;
@@ -21,8 +19,6 @@ import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import android.util.Log;
 import android.view.Menu;
@@ -30,13 +26,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
@@ -56,6 +50,8 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
 
     //ArrayList of messages to store the thread messages
     private ArrayList<Message> messages;
+
+    private TextView toolbarTextView;
 
     //Button to send new message on the thread
     private Button buttonSend;
@@ -99,11 +95,40 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
 
     //This method will fetch all the messages of the thread
     private void fetchMessages() {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_FETCH_MESSAGES,
+        final int[] contactsCount = new int[1];
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URLs.URL_GET_CONTATS,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        dialog.dismiss();
+
+                        try {
+                            String  str = new String(response.getBytes("ISO-8859-1"), "UTF-8");
+                            JSONArray thread = new JSONArray(str);
+
+                            contactsCount[0] = thread.length();
+
+                            TextView contactsTextView = (TextView) findViewById(R.id.contactsTextView);
+                            contactsTextView.setText(String.valueOf(contactsCount[0]) + " contatos");
+
+                        } catch (JSONException | UnsupportedEncodingException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+
+        AppController.getInstance().addToRequestQueue(stringRequest);
+
+        stringRequest = new StringRequest(Request.Method.GET, URLs.URL_FETCH_MESSAGES,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
 
                         try {
                             String  str = new String(response.getBytes("ISO-8859-1"), "UTF-8");
@@ -119,8 +144,13 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
                             }
 
                             adapter = new ThreadAdapter(ChatRoomActivity.this, messages, AppController.getInstance().getIdUser());
+
+                            TextView messageTextView = (TextView) findViewById(R.id.messagesTextView);
+                            messageTextView.setText(String.valueOf(adapter.getItemCount()) + " mensagens");
+
                             recyclerView.setAdapter(adapter);
                             scrollToBottom();
+                            dialog.dismiss();
 
                         } catch (JSONException | UnsupportedEncodingException e) {
                             e.printStackTrace();
@@ -217,7 +247,6 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
         Log.w("MainActivity", "onResume");
     }
 
-
     //Unregistering receivers
     @Override
     protected void onPause() {
@@ -225,7 +254,6 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
         Log.w("MainActivity", "onPause");
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
     }
-
 
     //Sending message onclick
     @Override
@@ -258,5 +286,4 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
         }
         return super.onOptionsItemSelected(item);
     }
-
 }

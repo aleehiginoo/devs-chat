@@ -70,6 +70,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        progressDialog.dismiss();
+
                         try {
                             JSONObject obj = new JSONObject(response);
                             int id = obj.getInt("id");
@@ -78,8 +80,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             //Login user
                             AppController.getInstance().loginUser(id,name,email);
-
-                            progressDialog.dismiss();
 
                             //Starting chat room we need to create this activity
                             startActivity(new Intent(MainActivity.this, ChatRoomActivity.class));
@@ -121,7 +121,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(new Intent(this, ChatRoomActivity.class));
         }
     }
-
 
     @Override
     public void onClick(View v) {

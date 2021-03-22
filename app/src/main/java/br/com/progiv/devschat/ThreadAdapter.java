@@ -86,7 +86,6 @@ public class ThreadAdapter extends RecyclerView.Adapter<ThreadAdapter.ViewHolder
         return simpleDateFormat.format(calendar.getTime());
     }
 
-
     @Override
     public int getItemCount() {
         return messages.size();
