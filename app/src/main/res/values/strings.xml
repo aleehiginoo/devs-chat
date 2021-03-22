@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">DevsChat</string>
+    <string name="app_name">Dev\'s CHAT</string>
+    <string name="name_label">Digite seu nome:</string>
+    <string name="email_label">Digite seu email:</string>
+    <string name="label_login">Entrar</string>
 </resources>
