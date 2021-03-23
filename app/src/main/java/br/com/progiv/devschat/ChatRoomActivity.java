@@ -279,11 +279,17 @@ public class ChatRoomActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.menuLogout) {
-            AppController.getInstance().logout();
-            finish();
-            startActivity(new Intent(this, MainActivity.class));
+        switch (id){
+            case R.id.menuLogout:
+                AppController.getInstance().logout();
+                finish();
+                startActivity(new Intent(this, MainActivity.class));
+                break;
+            case R.id.menuContacts:
+                startActivity(new Intent(this, ContactActivity.class));
+                break;
         }
+
         return super.onOptionsItemSelected(item);
     }
 }

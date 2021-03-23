@@ -5,28 +5,32 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:background="#d7d3f8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="3dp"
-        android:elevation="5dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="3dp"
+        android:background="@color/gray"
+        android:elevation="10dp"
         android:orientation="vertical"
         android:padding="15dp">
 
         <TextView
             android:id="@+id/textViewMessage"
-            android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Olá, como vai você?" />
+            android:text="@string/how_are"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/textViewTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Odeilso Leite, 21/03/2021 09:10?"
-            android:textSize="12dp"
-            />
+            android:text="@string/default_writer"
+            android:textColor="@color/black"
+            android:textSize="12dp" />
 
     </LinearLayout>
 
